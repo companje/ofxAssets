@@ -4,16 +4,16 @@
 
 class ofxImageAssets {
 public:
-	void add(string filename, bool preload=true);
+    void add(string filename, bool preload=true);
     ofImage &operator[](const string& filename);
-	map<string, ofImage*> assets;
+    map<string, ofImage*> assets;
 };
 
 class ofxVideoAssets {
 public:
-	void add(string filename, bool preload=true);
+    void add(string filename, bool preload=true);
     ofVideoPlayer &operator[](const string& filename);
-	map<string, ofVideoPlayer*> assets;
+    map<string, ofVideoPlayer*> assets;
 };
 
 class ofxFontAssets {

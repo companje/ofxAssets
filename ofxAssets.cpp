@@ -26,29 +26,29 @@ ofImage& ofxImageAssets::operator[](const string& filename) {
 }
 
 void ofxVideoAssets::add(string filename, bool preload) {
-	ofVideoPlayer *mov = new ofVideoPlayer();
-	
-	ofLog(OF_LOG_VERBOSE, "ofxAssets::add(\"" + filename + "\", preload=" + (preload ? "true" : "false") + ")");
-	
-	if (!mov->loadMovie(filename)) {
-		ofLog(OF_LOG_ERROR, "Movie not found: " + filename);
-		std::exit(1);
-	};
-	
-	assets[filename] = mov;
+    ofVideoPlayer *mov = new ofVideoPlayer();
+    
+    ofLog(OF_LOG_VERBOSE, "ofxAssets::add(\"" + filename + "\", preload=" + (preload ? "true" : "false") + ")");
+    
+    if (!mov->loadMovie(filename)) {
+        ofLog(OF_LOG_ERROR, "Movie not found: " + filename);
+        std::exit(1);
+    };
+    
+    assets[filename] = mov;
 }
 
 ofVideoPlayer& ofxVideoAssets::operator[](const string& filename) {
-	if (!assets[filename]) add(filename);
-	return *assets[filename];
+    if (!assets[filename]) add(filename);
+    return *assets[filename];
 }
 
 // fontname and size is combined into one string, because we need both of them as keys in the hash table
 void ofxFontAssets::add(string fontnamesize, bool preload) {
-	ofTrueTypeFont *fnt = new ofTrueTypeFont();
-	
-	ofLog(OF_LOG_VERBOSE, "ofxFontAssets::add(\"" + fontnamesize + "\", preload=" + (preload ? "true" : "false") + ")");
-	
+    ofTrueTypeFont *fnt = new ofTrueTypeFont();
+    
+    ofLog(OF_LOG_VERBOSE, "ofxFontAssets::add(\"" + fontnamesize + "\", preload=" + (preload ? "true" : "false") + ")");
+    
     istringstream iss(fontnamesize);                    // split up line in words
     string  fontname;
     int    fontsize;
@@ -56,8 +56,8 @@ void ofxFontAssets::add(string fontnamesize, bool preload) {
     getline(iss, fontname, '_');
     iss >> fontsize;
     
-	fnt->loadFont(fontname, fontsize);      // loadFont doesn't return status
-	assets[fontnamesize] = fnt;
+    fnt->loadFont(fontname, fontsize);      // loadFont doesn't return status
+    assets[fontnamesize] = fnt;
 }
 
 ofTrueTypeFont& ofxFontAssets::operator[](const string& fontnamesize) {
