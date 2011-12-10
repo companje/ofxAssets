@@ -13,10 +13,8 @@ void ofxImageAssets::add(string filename, bool preload) {
     
     //in case of BAD_ACCESS error see http://forum.openframeworks.cc/index.php/topic,7910.0.html
     
-    if (!asset->loadImage(filename)) {
-        ofLog(OF_LOG_ERROR, "Image not found: " + filename);
-        std::exit(1);
-    };    	
+    if (!asset->loadImage(filename)) std::exit(1);
+
     assets[filename] = asset;
 }
 
