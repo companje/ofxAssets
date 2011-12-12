@@ -16,6 +16,13 @@ public:
     map<string, ofVideoPlayer*> assets;
 };
 
+class ofxSoundAssets {
+public:
+    void add(string filename, bool preload=true);
+    ofSoundPlayer &operator[](const string& filename);
+    map<string, ofSoundPlayer*> assets;
+};
+
 class ofxFontAssets {
 public:
     void add(string fontnamesize, bool preload=true);

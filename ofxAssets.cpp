@@ -7,6 +7,8 @@
 
 #include "ofxAssets.h"
 
+//////////////////////////////////////////////////////////////
+
 void ofxImageAssets::add(string filename, bool preload) {
     ofImage *asset = new ofImage();	
     ofLog(OF_LOG_VERBOSE, "ofxImageAssets::add(\"" + filename + "\", preload=" + (preload ? "true" : "false") + ")");
@@ -23,10 +25,12 @@ ofImage& ofxImageAssets::operator[](const string& filename) {
     return *assets[filename];
 }
 
+///////////////////////////////////////////////////////////////
+
 void ofxVideoAssets::add(string filename, bool preload) {
     ofVideoPlayer *mov = new ofVideoPlayer();
     
-    ofLog(OF_LOG_VERBOSE, "ofxAssets::add(\"" + filename + "\", preload=" + (preload ? "true" : "false") + ")");
+    ofLog(OF_LOG_VERBOSE, "ofxVideoAssets::add(\"" + filename + "\", preload=" + (preload ? "true" : "false") + ")");
     
     if (!mov->loadMovie(filename)) {
         ofLog(OF_LOG_ERROR, "Movie not found: " + filename);
@@ -40,6 +44,30 @@ ofVideoPlayer& ofxVideoAssets::operator[](const string& filename) {
     if (!assets[filename]) add(filename);
     return *assets[filename];
 }
+
+///////////////////////////////////////////////////////////////
+
+void ofxSoundAssets::add(string filename, bool preload) {
+    ofSoundPlayer *snd = new ofSoundPlayer();
+    
+    ofLog(OF_LOG_VERBOSE, "ofxSoundAssets::add(\"" + filename + "\", preload=" + (preload ? "true" : "false") + ")");
+    
+    snd->loadSound(filename);
+    
+    if (snd->getPlayer()==NULL) {
+        ofLog(OF_LOG_ERROR, "ofxSoundAssets file not found: " + filename);
+        std::exit(1);
+    };
+    
+    assets[filename] = snd;
+}
+
+ofSoundPlayer& ofxSoundAssets::operator[](const string& filename) {
+    if (!assets[filename]) add(filename);
+    return *assets[filename];
+}
+
+////////////////////////////////////////////////////////////////
 
 // fontname and size is combined into one string, because we need both of them as keys in the hash table
 void ofxFontAssets::add(string fontnamesize, bool preload) {
