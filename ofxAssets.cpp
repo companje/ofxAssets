@@ -54,11 +54,6 @@ void ofxSoundAssets::add(string filename, bool preload) {
     
     snd->loadSound(filename);
     
-    if (snd->getPlayer()==NULL) {
-        ofLog(OF_LOG_ERROR, "ofxSoundAssets file not found: " + filename);
-        std::exit(1);
-    };
-    
     assets[filename] = snd;
 }
 
