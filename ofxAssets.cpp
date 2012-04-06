@@ -10,14 +10,25 @@
 //////////////////////////////////////////////////////////////
 
 void ofxImageAssets::add(string filename, bool preload) {
-    ofImage *asset = new ofImage();	
+    if (assets[filename]) return; //don't reload if already exists in map
+    
     ofLog(OF_LOG_VERBOSE, "ofxImageAssets::add(\"" + filename + "\", preload=" + (preload ? "true" : "false") + ")");
     
     //in case of BAD_ACCESS error see http://forum.openframeworks.cc/index.php/topic,7910.0.html
+    //in case of EXIF error by FreeImage use a new version of FreeImage.a: //http://sourceforge.net/projects/freeimage/forums/forum/36110/topic/5012811
+    //  of use exiftool (win & osx): https://owl.phy.queensu.ca/~phil/exiftool/
     
-    if (!asset->loadImage(filename)) std::exit(1);
-
+    ofImage *asset = new ofImage();	
     assets[filename] = asset;
+    
+    if (preload) {
+        //cout << "(pre)loading " << filename << endl;
+        //bool success = 
+        if (!asset->loadImage(filename)) {
+            ofLogError() << "ofxImageAssets::add(\"" << filename << "\") failed";
+            //if (!asset->loadImage(filename)) std::exit(1); //hmmm.... don't always exit    
+        }
+    }
 }
 
 ofImage& ofxImageAssets::operator[](const string& filename) {
